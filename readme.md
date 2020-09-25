@@ -1,17 +1,17 @@
-# README
+# dao
 
-this is a golang project of [my medium](https://medium.com/@ken00535)
+The package provides some functions that can help you handle slice easily.
 
-## Build
+## Install
 
-if you want to build application, use
-
-```bash
-make
+```
+go get -u github.com/ken00535/dao
 ```
 
-if your want to build specific application, use
+## Test
+
+if your want to test
 
 ```bash
-make FILES=genny
+go test ./pkg/dao
 ```
