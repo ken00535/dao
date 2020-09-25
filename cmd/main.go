@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	dao "github.com/ken00535/dao/pkg"
+)
 
 type People struct {
 	Name    string
@@ -10,7 +14,7 @@ type People struct {
 func main() {
 	num2 := []People{{Name: "Ken", Address: "TW"}, {Name: "Cythia"}}
 	new := []People{}
-	Filter(num2, &new, func(element interface{}) bool {
+	dao.Filter(num2, &new, func(element interface{}) bool {
 		if element.(People).Name == "Ken" {
 			return true
 		}
