@@ -20,12 +20,12 @@ func Find(source interface{}, out interface{}, callback func(element interface{}
 func Filter(source interface{}, out interface{}, callback func(element interface{}) bool) {
 	sourceValue := reflect.ValueOf(source)
 	temp := reflect.ValueOf(out).Elem()
+	outValue := temp
 	for i := 0; i < sourceValue.Len(); i++ {
 		if callback(sourceValue.Index(i).Interface()) {
 			temp = reflect.Append(temp, sourceValue.Index(i))
 		}
 	}
-	outValue := reflect.ValueOf(out).Elem()
 	outValue.Set(temp)
 }
 
@@ -41,11 +41,11 @@ func ForEach(source interface{}, out interface{}, callback func(element interfac
 func Map(source interface{}, out interface{}, callback func(element interface{}) interface{}) {
 	sourceValue := reflect.ValueOf(source)
 	temp := reflect.ValueOf(out).Elem()
+	outValue := temp
 	for i := 0; i < sourceValue.Len(); i++ {
 		mapVal := callback(sourceValue.Index(i).Interface())
 		temp = reflect.Append(temp, reflect.ValueOf(mapVal))
 	}
-	outValue := reflect.ValueOf(out).Elem()
 	outValue.Set(temp)
 }
 
