@@ -16,3 +16,15 @@ func FindKey(source interface{}, out interface{}, callback func(element interfac
 		}
 	}
 }
+
+// Keys get keys of map
+func Keys(source interface{}, out interface{}) {
+	sourceValue := reflect.ValueOf(source)
+	temp := reflect.ValueOf(out).Elem()
+	outElem := temp
+	keys := sourceValue.MapKeys()
+	for i := 0; i < len(keys); i++ {
+		temp = reflect.Append(temp, keys[i])
+	}
+	outElem.Set(temp)
+}
