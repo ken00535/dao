@@ -41,6 +41,7 @@ func ForEach(source interface{}, callback func(element interface{})) {
 func Map(source interface{}, out interface{}, callback func(element interface{}) interface{}) {
 	sourceValue := reflect.ValueOf(source)
 	temp := reflect.ValueOf(out).Elem()
+	temp.Set(reflect.Zero(temp.Type()))
 	outValue := temp
 	for i := 0; i < sourceValue.Len(); i++ {
 		mapVal := callback(sourceValue.Index(i).Interface())
@@ -65,6 +66,7 @@ func Reduce(source interface{}, out interface{}, callback func(interface{}, inte
 func Omit(source interface{}, out interface{}, callback func(element interface{}) bool) {
 	sourceValue := reflect.ValueOf(source)
 	temp := reflect.ValueOf(out).Elem()
+	temp.Set(reflect.Zero(temp.Type()))
 	for i := 0; i < sourceValue.Len(); i++ {
 		if !callback(sourceValue.Index(i).Interface()) {
 			temp = reflect.Append(temp, sourceValue.Index(i))

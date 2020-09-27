@@ -40,3 +40,21 @@ func TestPick(t *testing.T) {
 	})
 	assert.Equal(t, expect, actual)
 }
+
+func TestMerge(t *testing.T) {
+	team1 := make(map[string]personType)
+	team1["US"] = personType{Name: "Ken", Gender: "Male"}
+	team1["JP"] = personType{Name: "Akemi", Gender: "Female"}
+
+	team2 := make(map[string]personType)
+	team2["GBR"] = personType{Name: "Andy", Gender: "Male"}
+
+	expect := make(map[string]personType)
+	expect["US"] = personType{Name: "Ken", Gender: "Male"}
+	expect["JP"] = personType{Name: "Akemi", Gender: "Female"}
+	expect["GBR"] = personType{Name: "Andy", Gender: "Male"}
+
+	actual := make(map[string]personType)
+	Merge(team1, team2, &actual)
+	assert.Equal(t, expect, actual)
+}

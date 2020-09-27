@@ -42,3 +42,24 @@ func Pick(source interface{}, out interface{}, callback func(element interface{}
 	}
 	outElem.Set(temp)
 }
+
+// Merge all maps to a map
+func Merge(source interface{}, other interface{}, out interface{}) {
+
+	sourceValue := reflect.ValueOf(source)
+	otherValue := reflect.ValueOf(other)
+	temp := reflect.ValueOf(out).Elem()
+	temp.Set(reflect.MakeMap(temp.Type()))
+	outElem := temp
+
+	iter := sourceValue.MapRange()
+	for iter.Next() {
+		temp.SetMapIndex(iter.Key(), iter.Value())
+	}
+	iter = otherValue.MapRange()
+	for iter.Next() {
+		temp.SetMapIndex(iter.Key(), iter.Value())
+	}
+
+	outElem.Set(temp)
+}
