@@ -4,6 +4,28 @@ The package provides some functional programming style tools that can help you h
 
 It is inspired by [lodash](https://lodash.com/)
 
+## Function
+
+dao provides functions as following
+
+### slice
+
+- Difference
+- Filter
+- Find
+- ForEach
+- Map
+- Omit
+- Reduce
+- Uniq
+
+### map
+
+- FindKey
+- Keys
+- Merge
+- Pick
+
 ## Install
 
 ```
