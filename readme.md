@@ -1,6 +1,8 @@
 # dao
 
-The package provides some functions that can help you handle slice easily.
+The package provides some functional programming style tools that can help you handle slice easily.
+
+It is inspired by lodash[https://lodash.com/]
 
 ## Install
 

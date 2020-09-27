@@ -1,4 +1,4 @@
-package slicehandler
+package dao
 
 import (
 	"reflect"
