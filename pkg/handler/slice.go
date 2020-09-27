@@ -73,3 +73,19 @@ func Omit(source interface{}, out interface{}, callback func(element interface{}
 	outValue := reflect.ValueOf(out).Elem()
 	outValue.Set(temp)
 }
+
+// Uniq remove the duplicated elements
+func Uniq(source interface{}, out interface{}) {
+	sourceValue := reflect.ValueOf(source)
+	temp := reflect.ValueOf(out).Elem()
+	record := make(map[interface{}]bool)
+	for i := 0; i < sourceValue.Len(); i++ {
+		v := sourceValue.Index(i).Interface()
+		if _, exist := record[v]; !exist {
+			record[v] = true
+			temp = reflect.Append(temp, sourceValue.Index(i))
+		}
+	}
+	outValue := reflect.ValueOf(out).Elem()
+	outValue.Set(temp)
+}

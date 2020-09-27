@@ -28,3 +28,17 @@ func Keys(source interface{}, out interface{}) {
 	}
 	outElem.Set(temp)
 }
+
+// Pick the elemets that corresponding confition
+func Pick(source interface{}, out interface{}, callback func(element interface{}) bool) {
+	sourceValue := reflect.ValueOf(source)
+	temp := reflect.ValueOf(out).Elem()
+	outElem := temp
+	iter := sourceValue.MapRange()
+	for iter.Next() {
+		if callback(iter.Value().Interface()) {
+			temp.SetMapIndex(iter.Key(), iter.Value())
+		}
+	}
+	outElem.Set(temp)
+}

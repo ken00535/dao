@@ -76,3 +76,11 @@ func TestFind(t *testing.T) {
 	})
 	assert.Equal(t, expect, actual)
 }
+
+func TestUniq(t *testing.T) {
+	data := []int{1, 1, 2, 2}
+	expect := []int{1, 2}
+	var actual []int
+	Uniq(data, &actual)
+	assert.ElementsMatch(t, expect, actual)
+}
