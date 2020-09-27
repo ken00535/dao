@@ -1,4 +1,4 @@
-package dao
+package slice
 
 import (
 	"reflect"
@@ -30,7 +30,7 @@ func Filter(source interface{}, out interface{}, callback func(element interface
 }
 
 // ForEach visit each element and call callback
-func ForEach(source interface{}, out interface{}, callback func(element interface{})) {
+func ForEach(source interface{}, callback func(element interface{})) {
 	sourceValue := reflect.ValueOf(source)
 	for i := 0; i < sourceValue.Len(); i++ {
 		callback(sourceValue.Index(i).Interface())

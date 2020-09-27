@@ -1,4 +1,4 @@
-package dao
+package slice
 
 import (
 	"strings"
@@ -18,6 +18,26 @@ func TestFilter(t *testing.T) {
 	expect := []Person{{Name: "Ken", Gender: "Male"}}
 	Filter(people, &actual, func(person interface{}) bool {
 		return person.(Person).Name == "Ken"
+	})
+	assert.Equal(t, expect, actual)
+}
+
+func TestOmit(t *testing.T) {
+	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	actual := []Person{}
+	expect := []Person{{Name: "Cythia", Gender: "Female"}}
+	Omit(people, &actual, func(person interface{}) bool {
+		return person.(Person).Name == "Ken"
+	})
+	assert.Equal(t, expect, actual)
+}
+
+func TestForEach(t *testing.T) {
+	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	var actual []string
+	expect := []string{"Ken", "Cythia"}
+	ForEach(people, func(person interface{}) {
+		actual = append(actual, person.(Person).Name)
 	})
 	assert.Equal(t, expect, actual)
 }
