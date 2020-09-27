@@ -84,3 +84,12 @@ func TestUniq(t *testing.T) {
 	Uniq(data, &actual)
 	assert.ElementsMatch(t, expect, actual)
 }
+
+func TestDifference(t *testing.T) {
+	data := []int{1, 1, 2, 2, 3}
+	values := []int{1, 2}
+	expect := []int{3}
+	var actual []int
+	Difference(data, values, &actual)
+	assert.ElementsMatch(t, expect, actual)
+}

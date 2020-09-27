@@ -91,3 +91,26 @@ func Uniq(source interface{}, out interface{}) {
 	outValue := reflect.ValueOf(out).Elem()
 	outValue.Set(temp)
 }
+
+// Difference return slice values not included in the other given
+func Difference(source interface{}, values interface{}, out interface{}) {
+	sourceValue := reflect.ValueOf(source)
+	valuesValue := reflect.ValueOf(values)
+	temp := reflect.ValueOf(out).Elem()
+	outValue := temp
+	temp.Set(reflect.Zero(temp.Type()))
+	record := make(map[interface{}]bool)
+	for i := 0; i < valuesValue.Len(); i++ {
+		v := valuesValue.Index(i).Interface()
+		if _, exist := record[v]; !exist {
+			record[v] = true
+		}
+	}
+	for i := 0; i < sourceValue.Len(); i++ {
+		v := sourceValue.Index(i).Interface()
+		if _, exist := record[v]; !exist {
+			temp = reflect.Append(temp, sourceValue.Index(i))
+		}
+	}
+	outValue.Set(temp)
+}
