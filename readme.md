@@ -2,7 +2,7 @@
 
 The package provides some functional programming style tools that can help you handle slice easily.
 
-It is inspired by lodash[https://lodash.com/]
+It is inspired by [lodash](https://lodash.com/)
 
 ## Install
 
@@ -34,6 +34,20 @@ func main() {
 	})
 	fmt.Println(actual)
 }
+```
+
+## Build
+
+You can build example by
+
+```
+make
+```
+
+And run it
+
+```
+./bin/main
 ```
 
 ## Test
