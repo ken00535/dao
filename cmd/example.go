@@ -12,6 +12,10 @@ type personType struct {
 	Gender string
 }
 
+type genderType struct {
+	Gender string
+}
+
 func main() {
 	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
 	actual := []personType{}
@@ -38,9 +42,9 @@ func mapThenOmitThenMap() {
 		val := e.(string)
 		return strings.Contains(val, "K")
 	})
-	dao.Map(actual, &actual, func(e interface{}) interface{} {
-		val := e.(string)
-		return val + " " + "Ready"
+	var actual2 []genderType
+	dao.Map(actual, &actual2, func(e interface{}) interface{} {
+		return genderType{Gender: e.(string)}
 	})
-	fmt.Println(actual)
+	fmt.Println(actual2)
 }

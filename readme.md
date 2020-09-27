@@ -31,7 +31,7 @@ dao provides functions as following
 ## Install
 
 ```
-go get -u github.com/ken00535/dao
+go get -u github.com/ken00535/dao/pkg/handler
 ```
 
 ## Usage
