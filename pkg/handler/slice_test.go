@@ -7,48 +7,48 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type Person struct {
+type personType struct {
 	Name   string
 	Gender string
 }
 
 func TestFilter(t *testing.T) {
-	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
-	actual := []Person{}
-	expect := []Person{{Name: "Ken", Gender: "Male"}}
+	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	actual := []personType{}
+	expect := []personType{{Name: "Ken", Gender: "Male"}}
 	Filter(people, &actual, func(person interface{}) bool {
-		return person.(Person).Name == "Ken"
+		return person.(personType).Name == "Ken"
 	})
 	assert.Equal(t, expect, actual)
 }
 
 func TestOmit(t *testing.T) {
-	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
-	actual := []Person{}
-	expect := []Person{{Name: "Cythia", Gender: "Female"}}
+	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	actual := []personType{}
+	expect := []personType{{Name: "Cythia", Gender: "Female"}}
 	Omit(people, &actual, func(person interface{}) bool {
-		return person.(Person).Name == "Ken"
+		return person.(personType).Name == "Ken"
 	})
 	assert.Equal(t, expect, actual)
 }
 
 func TestForEach(t *testing.T) {
-	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
 	var actual []string
 	expect := []string{"Ken", "Cythia"}
 	ForEach(people, func(person interface{}) {
-		actual = append(actual, person.(Person).Name)
+		actual = append(actual, person.(personType).Name)
 	})
 	assert.Equal(t, expect, actual)
 }
 
 func TestReduce(t *testing.T) {
-	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
-	expect := Person{Name: "Ken Cythia"}
-	actual := Person{}
+	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	expect := personType{Name: "Ken Cythia"}
+	actual := personType{}
 	Reduce(people, &actual, func(m interface{}, n interface{}) interface{} {
-		person := Person{
-			Name: m.(Person).Name + " " + n.(Person).Name,
+		person := personType{
+			Name: m.(personType).Name + " " + n.(personType).Name,
 		}
 		return person
 	})
@@ -56,11 +56,11 @@ func TestReduce(t *testing.T) {
 }
 
 func TestMap(t *testing.T) {
-	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
-	expect := []Person{{Name: "ken", Gender: "Male"}, {Name: "cythia", Gender: "Female"}}
-	actual := []Person{}
+	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	expect := []personType{{Name: "ken", Gender: "Male"}, {Name: "cythia", Gender: "Female"}}
+	actual := []personType{}
 	Map(people, &actual, func(person interface{}) interface{} {
-		val := person.(Person)
+		val := person.(personType)
 		val.Name = strings.ToLower(val.Name)
 		return val
 	})
@@ -68,11 +68,11 @@ func TestMap(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
-	people := []Person{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
-	expect := Person{Name: "Cythia", Gender: "Female"}
-	actual := Person{}
+	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	expect := personType{Name: "Cythia", Gender: "Female"}
+	actual := personType{}
 	Find(people, &actual, func(person interface{}) bool {
-		return person.(Person).Name == "Cythia"
+		return person.(personType).Name == "Cythia"
 	})
 	assert.Equal(t, expect, actual)
 }
