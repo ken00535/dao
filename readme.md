@@ -6,6 +6,8 @@ It is inspired by [lodash](https://lodash.com/)
 
 ## Function
 
+You can find document at this [link](https://pkg.go.dev/github.com/ken00535/dao/pkg/handler)
+
 dao provides functions as following
 
 ### slice
