@@ -7,12 +7,13 @@ import (
 )
 
 func TestWrap(t *testing.T) {
-	func1 := func(i int) int {
-		return (i + 1)
+	multiple := func(num1 int, num2 float32) int {
+		product := float32(num1) * num2
+		return int(product)
 	}
-	var func2 func() int
-	Wrap(1, func1, &func2)
-	actual := func2()
-	expect := 2
+	var wrapFunc func(float32) int
+	Wrap(multiple, &wrapFunc, 2)
+	actual := wrapFunc(3.5)
+	expect := 7
 	assert.Equal(t, expect, actual)
 }

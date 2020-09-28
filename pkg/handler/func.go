@@ -5,17 +5,22 @@ import (
 )
 
 // Wrap the first key that correspond condition
-func Wrap(arg interface{}, source interface{}, out interface{}) {
+func Wrap(source interface{}, out interface{}, args ...interface{}) {
 	sourceValue := reflect.ValueOf(source)
-	temp := reflect.ValueOf(out).Elem()
-	argValue := reflect.ValueOf(arg)
-	in := []reflect.Value{argValue}
-
-	fn := func(args []reflect.Value) (results []reflect.Value) {
-		return sourceValue.Call(in)
+	outElem := reflect.ValueOf(out).Elem()
+	var argsArr []reflect.Value
+	for i := 0; i < len(args); i++ {
+		arg := args[i]
+		argsArr = append(argsArr, reflect.ValueOf(arg))
 	}
 
-	temp2 := reflect.MakeFunc(temp.Type(), fn)
+	fn := func(outArgs []reflect.Value) []reflect.Value {
+		outLen := len(outArgs)
+		for i := 0; i < outLen; i++ {
+			argsArr = append(argsArr, outArgs[i])
+		}
+		return sourceValue.Call(argsArr)
+	}
 
-	temp.Set(temp2)
+	outElem.Set(reflect.MakeFunc(outElem.Type(), fn))
 }
