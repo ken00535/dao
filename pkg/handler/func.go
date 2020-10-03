@@ -4,8 +4,8 @@ import (
 	"reflect"
 )
 
-// Wrap the first key that correspond condition
-func Wrap(source interface{}, out interface{}, args ...interface{}) {
+// Bind args to the fuction
+func Bind(source interface{}, out interface{}, args ...interface{}) {
 	sourceValue := reflect.ValueOf(source)
 	outElem := reflect.ValueOf(out).Elem()
 	var argsArr []reflect.Value
