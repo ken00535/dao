@@ -28,6 +28,19 @@ func TestKeys(t *testing.T) {
 	assert.ElementsMatch(t, expect, actual)
 }
 
+func TestValues(t *testing.T) {
+	team := make(map[string]personType)
+	team["US"] = personType{Name: "Ken", Gender: "Male"}
+	team["JP"] = personType{Name: "Akemi", Gender: "Female"}
+	expect := []personType{
+		personType{Name: "Ken", Gender: "Male"},
+		personType{Name: "Akemi", Gender: "Female"},
+	}
+	var actual []personType
+	Values(team, &actual)
+	assert.Equal(t, expect, actual)
+}
+
 func TestPick(t *testing.T) {
 	team := make(map[string]personType)
 	team["US"] = personType{Name: "Ken", Gender: "Male"}
