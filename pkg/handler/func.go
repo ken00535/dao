@@ -4,8 +4,8 @@ import (
 	"reflect"
 )
 
-// Bind args to the fuction
-func Bind(source interface{}, out interface{}, args ...interface{}) {
+// Partial args to the fuction
+func Partial(source interface{}, out interface{}, args ...interface{}) {
 	sourceValue := reflect.ValueOf(source)
 	outElem := reflect.ValueOf(out).Elem()
 	var argsArr []reflect.Value
