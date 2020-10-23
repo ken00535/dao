@@ -1,14 +1,14 @@
-# underscore
+# lodash
 
 The package provides some functional programming style tools that can help you handle slice easily.
 
-It is inspired by [lodash](https://lodash.com/)
+It is a implement of [lodash](https://lodash.com/) using Golang
 
 ## Function
 
 You can find document at this [link](https://pkg.go.dev/github.com/ken00535/dao/pkg/handler)
 
-dao provides functions as following
+it provides functions as following
 
 ### slice
 
@@ -31,7 +31,7 @@ dao provides functions as following
 ## Install
 
 ```
-go get -u github.com/ken00535/dao/pkg/handler
+go get -u github.com/ken00535/lodash/pkg/handler
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ You can use this package like
 import (
 	"fmt"
 
-	dao "github.com/ken00535/dao/pkg/handler"
+	lo "github.com/ken00535/lodash/pkg/handler"
 )
 
 type personType struct {
@@ -53,7 +53,7 @@ type personType struct {
 func main() {
 	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
 	actual := []personType{}
-	dao.Filter(people, &actual, func(person interface{}) bool {
+	lo.Filter(people, &actual, func(person interface{}) bool {
 		return person.(personType).Name == "Ken"
 	})
 	fmt.Println(actual)
