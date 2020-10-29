@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	dao "github.com/ken00535/dao/pkg/handler"
+	lo "github.com/ken00535/lodash/pkg/handler"
 )
 
 type personType struct {
@@ -19,7 +19,7 @@ type genderType struct {
 func main() {
 	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
 	actual := []personType{}
-	dao.Filter(people, &actual, func(person interface{}) bool {
+	lo.Filter(people, &actual, func(person interface{}) bool {
 		return person.(personType).Name == "Ken"
 	})
 	fmt.Println(actual)
@@ -33,17 +33,17 @@ func mapThenOmitThenMap() {
 		{Name: "Kumiko", Gender: "Female"},
 	}
 	var actual []string
-	dao.Map(people, &actual, func(p interface{}) interface{} {
+	lo.Map(people, &actual, func(p interface{}) interface{} {
 		val := p.(personType)
 		ret := val.Name + " " + val.Gender
 		return ret
 	})
-	dao.Omit(actual, &actual, func(e interface{}) bool {
+	lo.Omit(actual, &actual, func(e interface{}) bool {
 		val := e.(string)
 		return strings.Contains(val, "K")
 	})
 	var actual2 []genderType
-	dao.Map(actual, &actual2, func(e interface{}) interface{} {
+	lo.Map(actual, &actual2, func(e interface{}) interface{} {
 		return genderType{Gender: e.(string)}
 	})
 	fmt.Println(actual2)

@@ -6,7 +6,7 @@ It is a implement of [lodash](https://lodash.com/) using Golang
 
 ## Function
 
-You can find document at this [link](https://pkg.go.dev/github.com/ken00535/dao/pkg/handler)
+You can find document at this [link](https://pkg.go.dev/github.com/ken00535/lodash/pkg/handler)
 
 it provides functions as following
 
@@ -79,5 +79,5 @@ And run it
 If your want to test
 
 ```bash
-go test ./pkg/dao/handler
+go test ./pkg/lodash/handler
 ```

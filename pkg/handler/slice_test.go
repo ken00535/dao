@@ -1,4 +1,4 @@
-package dao
+package lodash
 
 import (
 	"strings"
@@ -19,6 +19,16 @@ func TestFilter(t *testing.T) {
 	Filter(people, &actual, func(person interface{}) bool {
 		return person.(personType).Name == "Ken"
 	})
+	assert.Equal(t, expect, actual)
+}
+
+func TestFilterNew(t *testing.T) {
+	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
+	actual := []personType{}
+	expect := []personType{{Name: "Ken", Gender: "Male"}}
+	Start(people).Filter(func(person interface{}) bool {
+		return person.(personType).Name == "Ken"
+	}).End(&actual)
 	assert.Equal(t, expect, actual)
 }
 
