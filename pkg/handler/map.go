@@ -1,77 +1,73 @@
 package lodash
 
-import (
-	"reflect"
-)
+import "reflect"
 
 // FindKey the first key that correspond condition
-func FindKey(source interface{}, out interface{}, callback func(element interface{}) bool) {
-	sourceValue := reflect.ValueOf(source)
-	temp := reflect.ValueOf(out).Elem()
+func (m *Type) FindKey(callback func(element interface{}) bool) *Type {
+	sourceValue := m.mapElement
 	iter := sourceValue.MapRange()
+	tmpValue := reflect.New(sourceValue.Type().Key()).Elem()
 	for iter.Next() {
 		if callback(iter.Value().Interface()) {
-			temp.Set(iter.Key())
+			tmpValue.Set(iter.Key())
 			break
 		}
 	}
+	m.mapElement = tmpValue
+	return m
 }
 
 // Keys get keys of map
-func Keys(source interface{}, out interface{}) {
-	sourceValue := reflect.ValueOf(source)
-	temp := reflect.ValueOf(out).Elem()
-	outElem := temp
-	keys := sourceValue.MapKeys()
-	for i := 0; i < len(keys); i++ {
-		temp = reflect.Append(temp, keys[i])
+func (m *Type) Keys() *Type {
+	sourceValue := m.mapElement
+	iter := sourceValue.MapRange()
+	tmpValue := reflect.MakeSlice(reflect.SliceOf(sourceValue.Type().Key()), 0, 0)
+	for iter.Next() {
+		tmpValue = reflect.Append(tmpValue, iter.Key())
 	}
-	outElem.Set(temp)
+	m.mapElement = tmpValue
+	return m
 }
 
 // Values get values of map
-func Values(source interface{}, out interface{}) {
-	sourceValue := reflect.ValueOf(source)
-	temp := reflect.ValueOf(out).Elem()
-	outElem := temp
+func (m *Type) Values() *Type {
+	sourceValue := m.mapElement
 	iter := sourceValue.MapRange()
+	tmpValue := reflect.MakeSlice(reflect.SliceOf(sourceValue.Type().Elem()), 0, 0)
 	for iter.Next() {
-		temp = reflect.Append(temp, iter.Value())
+		tmpValue = reflect.Append(tmpValue, iter.Value())
 	}
-	outElem.Set(temp)
+	m.mapElement = tmpValue
+	return m
 }
 
 // Pick the elemets that corresponding confition
-func Pick(source interface{}, out interface{}, callback func(element interface{}) bool) {
-	sourceValue := reflect.ValueOf(source)
-	temp := reflect.ValueOf(out).Elem()
-	outElem := temp
+func (m *Type) Pick(callback func(element interface{}) bool) *Type {
+	sourceValue := m.mapElement
 	iter := sourceValue.MapRange()
+	tmpValue := reflect.MakeMap(reflect.MapOf(sourceValue.Type().Key(), sourceValue.Type().Elem()))
 	for iter.Next() {
 		if callback(iter.Value().Interface()) {
-			temp.SetMapIndex(iter.Key(), iter.Value())
+			tmpValue.SetMapIndex(iter.Key(), iter.Value())
 		}
 	}
-	outElem.Set(temp)
+	m.mapElement = tmpValue
+	return m
 }
 
 // Merge all maps to a map
-func Merge(source interface{}, other interface{}, out interface{}) {
-
-	sourceValue := reflect.ValueOf(source)
+func (m *Type) Merge(other interface{}) *Type {
+	sourceValue := m.mapElement
 	otherValue := reflect.ValueOf(other)
-	temp := reflect.ValueOf(out).Elem()
-	temp.Set(reflect.MakeMap(temp.Type()))
-	outElem := temp
-
+	tmpValue := reflect.MakeMap(reflect.MapOf(sourceValue.Type().Key(), sourceValue.Type().Elem()))
 	iter := sourceValue.MapRange()
 	for iter.Next() {
-		temp.SetMapIndex(iter.Key(), iter.Value())
+		tmpValue.SetMapIndex(iter.Key(), iter.Value())
 	}
 	iter = otherValue.MapRange()
 	for iter.Next() {
-		temp.SetMapIndex(iter.Key(), iter.Value())
+		tmpValue.SetMapIndex(iter.Key(), iter.Value())
 	}
-
-	outElem.Set(temp)
+	m.mapElement = tmpValue
+	return m
 }

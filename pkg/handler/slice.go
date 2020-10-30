@@ -4,19 +4,6 @@ import (
 	"reflect"
 )
 
-// Type is type
-type Type struct {
-	mapElememt   map[interface{}]interface{}
-	sliceElement reflect.Value
-}
-
-// Start a chain
-func Start(source interface{}) *Type {
-	m := &Type{}
-	m.sliceElement = reflect.ValueOf(source)
-	return m
-}
-
 // ForEach visit each element and call callback
 func (m *Type) ForEach(callback func(element interface{}) bool) *Type {
 	sourceValue := m.sliceElement
@@ -138,10 +125,4 @@ func (m *Type) Difference(values interface{}) *Type {
 	m.ForEach(foreachAppend)
 	m.sliceElement = sliceValue
 	return m
-}
-
-// End a chain and return values
-func (m *Type) End(out interface{}) {
-	outValue := reflect.ValueOf(out).Elem()
-	outValue.Set(m.sliceElement)
 }

@@ -57,9 +57,18 @@ func main() {
 		return person.(personType).Name == "Ken"
 	}).End(&actual)
 	fmt.Println(actual)
+    // -> expect is []personType{{Name: "Ken", Gender: "Male"}}
+
+	team := make(map[string]personType)
+	team["US"] = personType{Name: "Ken", Gender: "Male"}
+	team["JP"] = personType{Name: "Akemi", Gender: "Female"}
+    Start(team).Values().End(&actual)
+    /* -> expect is []{
+		{Name: "Ken", Gender: "Male"},
+		{Name: "Akemi", Gender: "Female"},
+	}*/
 }
 
-// -> expect is []personType{{Name: "Ken", Gender: "Male"}}
 ```
 
 ## Build

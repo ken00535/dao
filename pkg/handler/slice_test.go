@@ -13,13 +13,27 @@ type personType struct {
 }
 
 func TestFilter(t *testing.T) {
-	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
-	actual := []personType{}
-	expect := []personType{{Name: "Ken", Gender: "Male"}}
-	Start(people).Filter(func(person interface{}) bool {
-		return person.(personType).Name == "Ken"
-	}).End(&actual)
-	assert.Equal(t, expect, actual)
+	type testCase struct {
+		dataReq []personType
+		want    []personType
+	}
+	cases := []testCase{
+		{
+			dataReq: []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}},
+			want:    []personType{{Name: "Ken", Gender: "Male"}},
+		},
+		{
+			dataReq: []personType{{Name: "Alisa", Gender: "Female"}, {Name: "Cythia", Gender: "Female"}},
+			want:    []personType{},
+		},
+	}
+	for _, tc := range cases {
+		actual := []personType{}
+		Start(tc.dataReq).Filter(func(person interface{}) bool {
+			return person.(personType).Name == "Ken"
+		}).End(&actual)
+		assert.Equal(t, tc.want, actual)
+	}
 }
 
 func TestFind(t *testing.T) {
@@ -93,4 +107,32 @@ func TestForEach(t *testing.T) {
 		return true
 	})
 	assert.Equal(t, expect, actual)
+}
+
+func TestChain(t *testing.T) {
+	type testCase struct {
+		dataReq []personType
+		want    []personType
+	}
+	cases := []testCase{
+		{
+			dataReq: []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}},
+			want:    []personType{{Name: "ken", Gender: "Male"}},
+		},
+		{
+			dataReq: []personType{{Name: "Alisa", Gender: "Female"}, {Name: "Cythia", Gender: "Female"}},
+			want:    []personType{},
+		},
+	}
+	for _, tc := range cases {
+		actual := []personType{}
+		Start(tc.dataReq).Filter(func(person interface{}) bool {
+			return person.(personType).Name == "Ken"
+		}).Map(func(person interface{}) interface{} {
+			val := person.(personType)
+			val.Name = strings.ToLower(val.Name)
+			return val
+		}).End(&actual)
+		assert.Equal(t, tc.want, actual)
+	}
 }
