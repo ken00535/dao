@@ -8,9 +8,9 @@ func BenchmarkFilter(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
 		actual := []personType{}
-		Filter(people, &actual, func(person interface{}) bool {
+		Start(people).Filter(func(person interface{}) bool {
 			return person.(personType).Name == "Ken"
-		})
+		}).End(&actual)
 	}
 }
 

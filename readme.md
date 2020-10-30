@@ -53,11 +53,13 @@ type personType struct {
 func main() {
 	people := []personType{{Name: "Ken", Gender: "Male"}, {Name: "Cythia", Gender: "Female"}}
 	actual := []personType{}
-	lo.Filter(people, &actual, func(person interface{}) bool {
+	lo.Start(people).Filter(func(person interface{}) bool {
 		return person.(personType).Name == "Ken"
-	})
+	}).End(&actual)
 	fmt.Println(actual)
 }
+
+// -> expect is []personType{{Name: "Ken", Gender: "Male"}}
 ```
 
 ## Build
